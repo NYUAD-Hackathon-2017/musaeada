@@ -40,6 +40,14 @@ app.get('/', function (req, res) {
   res.send('Hello World!')
 })
 
+app.post('/store', function(sReq, sRes){    
+  console.log('receiving request ' + sReq);
+})
+
+app.get('/receive', function(sReq, sRes){    
+  console.log('receiving request ' + sReq);
+})
+
 app.listen(3000, function () {
   console.log('listening on port 3000!')
 })
