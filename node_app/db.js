@@ -7,7 +7,7 @@ module.exports = {
     db.collection('edges').insertOne( {
       "broadcaster": ops.broadcaster,
       "timestamp": ops.ts,
-      "codename": ops.name,
+      //"codename": ops.name,
       "subscriber": ops.subscriber,
     }, function(err, result) {
       assert.equal(err, null);
@@ -17,7 +17,7 @@ module.exports = {
 
   // Use this to retrieve a list of edges from the mongo db 
   retrieveEdges : function(db, ops, callback) {
-    var edgeList = [];
+    //var edgeList = [];
     var cursor = db.collection('edges').find();
 
     cursor.toArray(function(err, doc) {
@@ -25,9 +25,9 @@ module.exports = {
       assert.notEqual(doc, [], 'Found no entries.');
       for (var i in doc) {
         thisText = doc[i];
-        edgeList.unshift(thisText);
+        //edgeList.unshift(thisText);
       }
-      callback(doc[0], edgeList);
+      callback(doc);
     });
   }
 

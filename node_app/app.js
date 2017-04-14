@@ -13,7 +13,6 @@ const pass = process.env.MONGO_PW;
 const host = process.env.MONGO_HOST;
 const port = process.env.MONGO_PORT;
 
-
 // DB Connection stuff
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
@@ -36,6 +35,12 @@ client.messages.create({
    }
 });
 
+// Set up mongo client.
+let url = `mongodb://${user}:${pass}@${host}:${port}`;
+if (process.env.MONGO_DB) {
+  url = `${url}/${process.env.MONGO_DB}`;
+}
+console.log('url is ' + url);
 
 // On initialization, store associations
 function storeEdges(sender, subscribers) {
@@ -56,6 +61,27 @@ function sendTo(receiver, msg) {
 
 }
 
+// This just tests that the db functions work. 
+function db_test() {
+	MongoClient.connect(url, function(err, db) {
+
+		var opts = {
+			broadcaster: '1234567890',
+			ts: 123,
+			subscriber: '11111111111',
+		};
+
+		dbHelper.createNewEdge(db, opts, function() {
+	    db.close();
+	  });
+
+	  dbHelper.retrieveEdges(db, opts, function(subscribers) {
+	  	console.log(subscribers);
+	  	db.close();
+	  });
+	});
+}
+
 app.get('/', function (req, res) {
   res.send('Hello World!')
 })
@@ -69,5 +95,6 @@ app.get('/receive', function(sReq, sRes){
 })
 
 app.listen(3000, function () {
+	//db_test();
   console.log('listening on port 3000!')
 })
