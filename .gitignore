@@ -30,3 +30,6 @@ proguard/
 .idea/
 
 .DS_Store
+
+/node_app/.env
+/node_app/node_modules/*
