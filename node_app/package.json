@@ -1,0 +1,14 @@
+{
+  "name": "musaeada",
+  "version": "1.0.0",
+  "description": "service for primitive social network over sms",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "musaeada_team",
+  "license": "MIT",
+  "dependencies": {
+    "node-env-file": "^0.1.8"
+  }
+}
