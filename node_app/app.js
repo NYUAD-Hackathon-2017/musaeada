@@ -33,10 +33,10 @@ var twilio = require('twilio');
 var client = new twilio.RestClient(accountSid, authToken);
 
 
-function sendMessageTo(sender, receiver, message) {
+function sendMessageTo(sender, sender_number, receiver, message) {
   console.log("Message sent.")
   client.messages.create({
-      body: sender + ": " + message,
+      body: sender + " (" + sender_number + ")" + ": " + message,
       to: receiver,  // Text this number
       from: process.env.TWILIO_PHONE_NUMBER // From a valid Twilio number
   }, function(err, message) {
@@ -86,7 +86,7 @@ function broadcast(sender_number, msg) {
 	        //var sender_name = mappings_of_user[i]['broadcastername']
 	        var sender_name = name['name'];
 	        console.log(sender_name + " has subscriber: " + subscriber_number);
-	        sendMessageTo(sender_name, subscriber_number, msg);
+	        sendMessageTo(sender_name, sender_number, subscriber_number, msg);
 	      }
 		  	db.close();
 		  });
@@ -152,6 +152,20 @@ function parseMessage(sender, msg) {
 	  		db.close();
 	  	});
 	  });
+  } else if (action === 'SUBS' || action === 'subs') {
+  	var phone = utils.getSubscribeNumber(msg);
+  	console.log(phone);
+  	// put the subscribe number in the edge list.
+  	var opts = {
+			broadcaster: phone,
+			subscriber: sender,
+		};
+
+  	MongoClient.connect(url, function(err, db) {
+			dbHelper.createNewEdge(db, opts, function() {
+				db.close();
+			});
+		});
   } else {
   	console.log('No associated action with message ' + msg);
   }
@@ -168,6 +182,9 @@ function parseTest() {
 
 	var sendMessage = "SEND hello world, this should send from number";
 	//parseMessage(process.env.SHIRLEY_NUMBER, sendMessage);
+
+	var subscribe = "SUBS " + process.env.NAOMI_NUMBER;
+	parseMessage(process.env.SHIRLEY_NUMBER, subscribe);
 }
 
 // --------------------------- ENDPOINTS ------------------------------
@@ -187,11 +204,8 @@ app.post('/receive', function(req, res){
     parseMessage(req.body.From, req.body.Body);
 })
 
-// app.get('/send', function(sReq, sRes){
-//   // sendMessageTo("Naomi", process.env.RASHIQ_NUMBER, "Such a Rashiq thing to do...");
-//   console.log('Receiving request ' + sReq);
-// })
 
 app.listen(3000, function () {
+	parseTest();
   console.log('listening on port 3000!')
 })

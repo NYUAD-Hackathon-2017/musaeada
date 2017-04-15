@@ -8,10 +8,11 @@ module.exports = {
   createNewEdge : function(db, ops, callback) {
     db.collection('edges').update( {
       "broadcaster": ops.broadcaster,
-      //"broadcastername": ops.broadcastername,
-      //"codename": ops.name,
       "subscriber": ops.subscriber,
-    }, function(err, result) {
+    }, {
+      "broadcaster": ops.broadcaster,
+      "subscriber": ops.subscriber,
+    }, {upsert: true}, function(err, result) {
       assert.equal(err, null);
       callback();
     });

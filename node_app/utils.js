@@ -32,6 +32,17 @@ module.exports = {
 		return cleanedNumbers;
   },
 
+  getSubscribeNumber : function(msg) {
+  	var string = msg.substr(msg.indexOf(" ") + 1);
+
+  	var cleaned = string.replace(/\D/g, "");
+
+  	if (cleaned.length > 11 || cleaned.length < 10) {
+  		console.log('Invalid phone number in subscribe number ' + cleaned);
+  		return '';
+  	} 
+  	return cleaned;
+  }
 
 
 };
