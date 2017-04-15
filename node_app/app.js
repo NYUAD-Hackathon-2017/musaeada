@@ -97,10 +97,6 @@ function broadcast(sender_number, msg) {
 	});
 }
 
-function receive(sender_number, msg) {
-  parseMessage
-}
-
 function sendTo(receiver, msg) {}
 
 function batchAdd(cleaned, sender, name) {
@@ -120,7 +116,7 @@ function batchAdd(cleaned, sender, name) {
 	});
 }
 
-// Determines if we have an ADD or SEND upon first receipt 
+// Determines if we have an ADD or SEND upon first receipt
 function parseMessage(sender, msg) {
 	var action = msg.split(' ')[0];
 
@@ -135,7 +131,7 @@ function parseMessage(sender, msg) {
 	  	dbHelper.retrieveName(db, opts, function(obj) {
 	  		//console.log("name is " + obj["name"]);
 	  		var name = obj['name'];
-	  		// Get the numbers and batch add async to db 
+	  		// Get the numbers and batch add async to db
 		  	var cleanedNumbers = utils.getNumbers(msg);
 		  	//console.log(cleanedNumbers + " cleaned numbers");
 		  	batchAdd(cleanedNumbers, sender, name);
@@ -143,7 +139,7 @@ function parseMessage(sender, msg) {
 	  	});
 	  });
   } else if (action === 'SEND' || action === 'send') {
-  	// Get the message to send. 
+  	// Get the message to send.
   	var cleanedMessage = utils.getMessage(msg);
 
   	// Broadcast the cleaned message.
@@ -156,7 +152,7 @@ function parseMessage(sender, msg) {
   		name: name,
   	};
 
-  	// Store the name. 
+  	// Store the name.
   	MongoClient.connect(url, function(err, db) {
 	  	dbHelper.createNewName(db, opts, function() {
 	  		db.close();
@@ -169,7 +165,7 @@ function parseMessage(sender, msg) {
 
 // DON'T run this often. it sends lots of messages and that costs $$$.
 function parseTest() {
-	// Test the name storage. 
+	// Test the name storage.
 	var nameMessage = "SELF Shirley";
 	//parseMessage(nameMessage, process.env.SHIRLEY_NUMBER);
 
