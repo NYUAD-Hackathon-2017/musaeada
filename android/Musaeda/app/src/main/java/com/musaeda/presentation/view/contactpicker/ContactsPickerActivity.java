@@ -1,12 +1,15 @@
 package com.musaeda.presentation.view.contactpicker;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.musaeda.R;
@@ -22,6 +25,9 @@ public class ContactsPickerActivity extends BaseActivity<ContactsPickerActivity>
     implements LightCycleDispatcher<ActivityLightCycle<ContactsPickerActivity>>,
     ContactsPickerCallback {
 
+  private Toolbar mToolbar;
+  private ActionBar mActionBar;
+
   @Inject @LightCycle ContactsPickerPresenter presenter;
 
   @BindView(R.id.contacts_picker_list) RecyclerView recyclerView;
@@ -29,6 +35,16 @@ public class ContactsPickerActivity extends BaseActivity<ContactsPickerActivity>
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     // recyclerView.setAdapter(new ContactsPickerAdapter(myDataset));
+
+    mToolbar = (Toolbar) findViewById(R.id.toolbar);
+    setSupportActionBar(mToolbar);
+
+    mActionBar = getSupportActionBar();
+    if (mActionBar != null){
+      mActionBar.setDisplayShowHomeEnabled(true);
+      mActionBar.setDisplayHomeAsUpEnabled(true);
+      mActionBar.setDisplayShowTitleEnabled(false);
+    }
   }
 
   @Override protected void setContentView() {
