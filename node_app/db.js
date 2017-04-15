@@ -6,9 +6,9 @@ module.exports = {
   // Use the insertOne method to create a new document when a
   // new edge is created
   createNewEdge : function(db, ops, callback) {
-    db.collection('edges').insertOne( {
+    db.collection('edges').update( {
       "broadcaster": ops.broadcaster,
-      "broadcastername": ops.broadcastername,
+      //"broadcastername": ops.broadcastername,
       //"codename": ops.name,
       "subscriber": ops.subscriber,
     }, function(err, result) {
@@ -17,11 +17,28 @@ module.exports = {
     });
   },
 
-  createManyEdges : function(db, entries, callback) {
-    console.log(entries);
-    db.collection('edges').insert(entries, function(err, result) {
-      assert.equal(err, null);
-      callback();
+  createManyEdges : function(db, entries, sender, callback) {
+    //console.log(entries);
+    // Deduplicate first by calling retrieveEdges. 
+    this.retrieveEdges(db, {broadcaster: sender}, function(results) {
+      // Map entries to just numbers. 
+      var numbers = results.map(function(result) {
+        return result['subscriber'];
+      });
+
+      var deduped = entries.filter(function(entry) {
+        return numbers.indexOf(entry.subscriber) === -1;
+      });
+
+      if (deduped.length === 0) {
+        callback();
+        return;
+      }
+
+      db.collection('edges').insert(deduped, function(err, result) {
+        assert.equal(err, null);
+        callback();
+      });
     });
   },
 

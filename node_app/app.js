@@ -83,17 +83,21 @@ function broadcast(sender_number, msg) {
 			broadcaster: sender_number,
 		};
 
-	  dbHelper.retrieveEdges(db, opts, function(mappings_of_user) {
-	  	console.log(mappings_of_user);
+		dbHelper.retrieveName(db, {number: sender_number}, function(name) {
+			dbHelper.retrieveEdges(db, opts, function(mappings_of_user) {
+		  	console.log(mappings_of_user);
 
-      for(var i=0; i < mappings_of_user.length; i++){
-        var subscriber_number = mappings_of_user[i]['subscriber'];
-        var sender_name = mappings_of_user[i]['broadcastername']
-        console.log(sender_name + " has subscriber: " + subscriber_number);
-        sendMessageTo(sender_name, subscriber_number, msg);
-      }
-	  	db.close();
-	  });
+	      for(var i=0; i < mappings_of_user.length; i++){
+	        var subscriber_number = mappings_of_user[i]['subscriber'];
+	        //var sender_name = mappings_of_user[i]['broadcastername']
+	        var sender_name = name;
+	        console.log(sender_name + " has subscriber: " + subscriber_number);
+	        sendMessageTo(sender_name, subscriber_number, msg);
+	      }
+		  	db.close();
+		  });
+		});
+
 	});
 }
 
@@ -104,13 +108,13 @@ function batchAdd(cleaned, sender, name) {
 	cleaned.forEach(function(num) {
 		batch.push({
 			broadcaster: sender,
-			broadcastername: name,
+			//broadcastername: name,
 			subscriber: num,
 		});
 	});
 
 	MongoClient.connect(url, function(err, db) {
-		dbHelper.createManyEdges(db, batch, function() {
+		dbHelper.createManyEdges(db, batch, sender, function() {
 			db.close();
 		});
 	});
@@ -167,13 +171,13 @@ function parseMessage(sender, msg) {
 function parseTest() {
 	// Test the name storage.
 	var nameMessage = "SELF Shirley";
-	//parseMessage(nameMessage, process.env.SHIRLEY_NUMBER);
+	//parseMessage(process.env.SHIRLEY_NUMBER, nameMessage);
 
 	var addMessage = "ADD " + process.env.NAOMI_NUMBER + ", " + process.env.RASHIQ_NUMBER;
-	parseMessage(addMessage, process.env.SHIRLEY_NUMBER);
+	parseMessage(process.env.SHIRLEY_NUMBER, addMessage);
 
 	var sendMessage = "SEND hello to everyone!";
-	parseMessage(sendMessage, process.env.SHIRLEY_NUMBER);
+	//parseMessage(process.env.SHIRLEY_NUMBER, sendMessage);
 }
 
 // --------------------------- ENDPOINTS ------------------------------
@@ -193,12 +197,12 @@ app.post('/receive', function(req, res){
     parseMessage(req.body.From, req.body.Body);
 })
 
-app.get('/send', function(sReq, sRes){
-  // sendMessageTo("Naomi", process.env.RASHIQ_NUMBER, "Such a Rashiq thing to do...");
-  console.log('Receiving request ' + sReq);
-})
+// app.get('/send', function(sReq, sRes){
+//   // sendMessageTo("Naomi", process.env.RASHIQ_NUMBER, "Such a Rashiq thing to do...");
+//   console.log('Receiving request ' + sReq);
+// })
 
 app.listen(3000, function () {
-	//parseTest();
+	parseTest();
   console.log('listening on port 3000!')
 })
