@@ -1,4 +1,4 @@
-package com.musaeda;
+package com.musaeda.presentation.view.contactpicker.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;

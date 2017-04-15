@@ -1,11 +1,12 @@
-package com.musaeda;
+package com.musaeda.presentation.view.contactpicker;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import com.musaeda.R;
 
-public class PickActivity extends AppCompatActivity {
+public class ContactsPickerActivity extends AppCompatActivity {
   private RecyclerView mRecyclerView;
   private RecyclerView.Adapter mAdapter;
   private RecyclerView.LayoutManager mLayoutManager;
