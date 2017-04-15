@@ -10,7 +10,7 @@ module.exports = {
   getMessage : function(msg) {
   	// get rid of the SEND
   	return msg.substr(msg.indexOf(" ") + 1);
-  }, 
+  },
 
   getNumbers : function(msg) {
 		var numbersString = msg.substr(msg.indexOf(" ") + 1);
@@ -46,3 +46,19 @@ module.exports = {
 
 
 };
+
+// right outer join
+
+// ping whether sms went through
+// HELP messages get propagated to emergency services
+// IFTTT - post on facebook
+// sustainability
+// updating them about their network
+
+// bidirectional associations
+// where are we getting the funding.
+  // government
+  // non profit
+  // low cost
+  // highlight the no-data
+  // has a fallback!!!
