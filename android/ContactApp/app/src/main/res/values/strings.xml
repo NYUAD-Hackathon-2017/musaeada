@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Contacts Application</string>
+    <string name="no_notes">Sorry, no contacts</string>
+    <string name="menu_insert">Insert new contact</string>
+    <string name="menu_delete">Delete contact</string>
+    
+    <string name="label_name">Name</string>
+    <string name="label_address">Address</string>
+</resources>

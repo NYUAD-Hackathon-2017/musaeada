@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+           android:layout_width="fill_parent"
+           android:layout_height="fill_parent"
+>
+<TextView
+	android:id="@+id/labelName"
+	android:layout_width="60sp"
+	android:layout_height="wrap_content"
+	android:textSize="15sp"
+	android:text="@string/label_name"
+/>
+<EditText
+	android:id="@+id/textName"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_alignTop="@id/labelName"
+	android:layout_toRight="@id/labelName"
+/>
+<TextView
+	android:id="@+id/labelAddress"
+	android:layout_width="60sp"
+	android:layout_height="wrap_content"
+	android:layout_below="@id/textName"
+	android:textSize="15sp"
+	android:text="@string/label_address"
+/>
+<EditText 
+	android:id="@+id/textAddress"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:layout_alignTop="@id/labelAddress"
+	android:layout_toRight="@id/labelAddress"
+	android:layout_below="@id/labelName"
+	android:text=""
+	android:textSize="15sp"
+	android:singleLine="True"
+/>
+<TextView
+	android:id="@+id/labelMobile"
+	android:layout_width="60sp"
+	android:layout_height="wrap_content"
+	android:layout_below="@id/textAddress"
+	android:text="Mobile #"
+	android:textSize="15sp"
+/>	
+<EditText 
+		  android:id="@+id/textMobile"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignTop="@id/labelMobile"
+          android:layout_below="@id/textAddress"
+          android:layout_toRight="@id/labelMobile"
+          android:text=""
+          android:singleLine="True"
+          android:textSize="15sp"
+/>
+<TextView 
+		  android:id="@+id/labelHome"
+          android:layout_width="60sp"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/textMobile"
+          android:text="Home #"
+          android:textSize="15sp"
+/>
+<EditText 
+		  android:id="@+id/textHome"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignTop="@id/labelHome"
+          android:layout_below="@id/textMobile"
+          android:layout_toRight="@id/labelHome"
+          android:text=""
+          android:singleLine="True"
+          android:textSize="15sp"
+/>
+<Button 
+		  android:id="@+id/BtnSave"
+          android:layout_width="60sp"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/textHome"
+          android:text="Save"
+          android:textSize="15sp"
+/>
+</RelativeLayout>
