@@ -54,11 +54,6 @@ if (process.env.MONGO_DB) {
 }
 console.log('url is ' + url);
 
-// On initialization, store associations
-function storeEdges(sender, subscribers) {
-
-}
-
 function addData(user_number, name, subscriber) {
 	 console.log("Adding data: " + user_number + ", " + name + ", " + subscriber)
 	MongoClient.connect(url, function(err, db) {
@@ -90,7 +85,7 @@ function broadcast(sender_number, msg) {
 	      for(var i=0; i < mappings_of_user.length; i++){
 	        var subscriber_number = mappings_of_user[i]['subscriber'];
 	        //var sender_name = mappings_of_user[i]['broadcastername']
-	        var sender_name = name;
+	        var sender_name = name['name'];
 	        console.log(sender_name + " has subscriber: " + subscriber_number);
 	        sendMessageTo(sender_name, subscriber_number, msg);
 	      }
@@ -100,8 +95,6 @@ function broadcast(sender_number, msg) {
 
 	});
 }
-
-function sendTo(receiver, msg) {}
 
 function batchAdd(cleaned, sender, name) {
 	var batch = [];
@@ -188,9 +181,9 @@ app.get('/', function (req, res) {
   res.send('Sending message!')
 })
 
-app.post('/store', function(sReq, sRes){
-  console.log('receiving request ' + sReq);
-})
+// app.post('/store', function(sReq, sRes){
+//   console.log('receiving request ' + sReq);
+// })
 
 app.post('/receive', function(req, res){
     console.log("Received: " + req.body.Body + " from " + req.body.From);
@@ -203,6 +196,5 @@ app.post('/receive', function(req, res){
 // })
 
 app.listen(3000, function () {
-	parseTest();
   console.log('listening on port 3000!')
 })
