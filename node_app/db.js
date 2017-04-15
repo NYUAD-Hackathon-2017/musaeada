@@ -1,3 +1,5 @@
+'use strict'
+
 var assert = require('assert');
 
 module.exports = {
@@ -15,6 +17,14 @@ module.exports = {
     });
   },
 
+  createManyEdges : function(db, entries, callback) {
+    console.log(entries);
+    db.collection('edges').insert(entries, function(err, result) {
+      assert.equal(err, null);
+      callback();
+    });
+  },
+
   // Use this to retrieve a list of edges from the mongo db
   retrieveEdges : function(db, ops, callback) {
     //var edgeList = [];
@@ -23,12 +33,28 @@ module.exports = {
     cursor.toArray(function(err, doc) {
       assert.equal(err, null);
       assert.notEqual(doc, [], 'Found no entries.');
-      for (var i in doc) {
-        thisText = doc[i];
-        //edgeList.unshift(thisText);
-      }
       callback(doc);
     });
-  }
+  },
 
+  // Add a name number association 
+  createNewName : function(db, ops, callback) {
+    db.collection('names').insertOne({
+      "number" : ops.number,
+      "name" : ops.name,
+    }, function(err, result) {
+      assert.equal(err, null);
+      callback();
+    });
+  },
+
+  // Retrieve a name number association 
+  retrieveName : function(db, ops, callback) {
+    var cursor = db.collection('names').find(ops);
+    cursor.toArray(function(err, doc) {
+      assert.equal(err, null);
+      assert.notEqual(doc, [], 'Found no entries');
+      callback(doc[0]);
+    });
+  }
 };

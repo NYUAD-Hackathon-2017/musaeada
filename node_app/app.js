@@ -1,6 +1,7 @@
 'use strict'
 
 const dbHelper = require('./db.js');
+const utils = require('./utils.js')
 const app = require('express')();
 const env = require('node-env-file');
 const assert = require('assert');
@@ -58,8 +59,8 @@ function storeEdges(sender, subscribers) {
 
 }
 
-function add_data(user_number, name, subscriber) {
-  console.log("Adding data: " + user_number + ", " + name + ", " + subscriber)
+function addData(user_number, name, subscriber) {
+	 console.log("Adding data: " + user_number + ", " + name + ", " + subscriber)
 	MongoClient.connect(url, function(err, db) {
 
 		var opts = {
@@ -96,7 +97,6 @@ function broadcast(sender_number, msg) {
 	});
 }
 
-
 function receive(sender_number, msg) {
   if (msg[0] == '+') { // replace with check for sign up
     console.log("sign me up!")
@@ -105,13 +105,89 @@ function receive(sender_number, msg) {
   }
 }
 
+function sendTo(receiver, msg) {}
+
+function batchAdd(cleaned, sender, name) {
+	var batch = [];
+	cleaned.forEach(function(num) {
+		batch.push({
+			broadcaster: sender,
+			broadcastername: name,
+			subscriber: num,
+		});
+	});
+
+	MongoClient.connect(url, function(err, db) {
+		dbHelper.createManyEdges(db, batch, function() {
+			db.close();
+		});
+	});
+}
+
+// Determines if we have an ADD or SEND upon first receipt 
+function parseMessage(msg, sender) {
+	var action = msg.split(' ')[0];
+
+  if (action === 'ADD' || action === 'add') {
+  	// Get the name for the current sender's number.
+  	var opts = {
+  		number : sender,
+  	};
+
+  	// Query for the sender's name.
+  	MongoClient.connect(url, function(err, db) {
+	  	dbHelper.retrieveName(db, opts, function(obj) {
+	  		//console.log("name is " + obj["name"]);
+	  		var name = obj['name'];
+	  		// Get the numbers and batch add async to db 
+		  	var cleanedNumbers = utils.getNumbers(msg);
+		  	//console.log(cleanedNumbers + " cleaned numbers");
+		  	batchAdd(cleanedNumbers, sender, name);
+		  	db.close();
+	  	});
+	  });
+  } else if (action === 'SEND' || action === 'send') {
+  	// Get the message to send. 
+  	var cleanedMessage = utils.getMessage(msg);
+
+  	// Broadcast the cleaned message.
+  	broadcast(sender, cleanedMessage);
+  } else if (action === 'SELF' || action === 'self') {
+  	var name = utils.getMessage(msg);
+
+  	var opts = {
+  		number: sender,
+  		name: name,
+  	};
+
+  	// Store the name. 
+  	MongoClient.connect(url, function(err, db) {
+	  	dbHelper.createNewName(db, opts, function() {
+	  		db.close();
+	  	});
+	  });
+  } else {
+  	console.log('No associated action with message ' + msg);
+  }
+}
+
+function parseTest() {
+	// Test the name storage. 
+	var nameMessage = "SELF Shirley";
+	//parseMessage(nameMessage, process.env.SHIRLEY_NUMBER);
+
+	var addMessage = "ADD " + process.env.NAOMI_NUMBER + ", " + process.env.RASHIQ_NUMBER;
+	parseMessage(addMessage, process.env.SHIRLEY_NUMBER);
+
+	var sendMessage = "SEND hello to everyone!";
+	parseMessage(sendMessage, process.env.SHIRLEY_NUMBER);
+}
 
 // --------------------------- ENDPOINTS ------------------------------
 
 app.get('/', function (req, res) {
   add_data(process.env.NAOMI_NUMBER, "Naomi", process.env.RASHIQ_NUMBER);
   // broadcast(process.env.NAOMI_NUMBER, "Message");
-
   res.send('Sending message!')
 })
 
@@ -130,6 +206,6 @@ app.get('/send', function(sReq, sRes){
 })
 
 app.listen(3000, function () {
-	//db_test();
+	//parseTest();
   console.log('listening on port 3000!')
 })
