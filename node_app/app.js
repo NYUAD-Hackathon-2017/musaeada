@@ -32,6 +32,19 @@ var authToken = process.env.TWILIO_AUTH_TOKEN;   // Your Auth Token from www.twi
 var twilio = require('twilio');
 var client = new twilio.RestClient(accountSid, authToken);
 
+function sendAckTo(receiver, message) {
+  console.log("Message sent.")
+  client.messages.create({
+      body: message,
+      to: receiver,  // Text this number
+      from: process.env.TWILIO_PHONE_NUMBER // From a valid Twilio number
+  }, function(err, message) {
+     if(err) {
+        console.error(err.message);
+     }
+  });
+
+}
 
 function sendMessageTo(sender, sender_number, receiver, message) {
   console.log("Message sent.")
@@ -44,7 +57,6 @@ function sendMessageTo(sender, sender_number, receiver, message) {
         console.error(err.message);
      }
   });
-
 }
 
 // Set up mongo client.
@@ -132,12 +144,15 @@ function parseMessage(sender, msg) {
 		  	db.close();
 	  	});
 	  });
+
+    sendAckTo(sender, "Number added.");
   } else if (action === 'SEND' || action === 'send') {
   	// Get the message to send.
   	var cleanedMessage = utils.getMessage(msg);
 
   	// Broadcast the cleaned message.
   	broadcast(sender, cleanedMessage);
+    sendAckTo(sender, "Message broadcast.")
   } else if (action === 'SELF' || action === 'self') {
   	var name = utils.getMessage(msg);
 
@@ -152,6 +167,7 @@ function parseMessage(sender, msg) {
 	  		db.close();
 	  	});
 	  });
+    sendAckTo(sender, "Hello " + name + ".");
   } else if (action === 'SUBS' || action === 'subs') {
   	var phone = utils.getSubscribeNumber(msg);
   	console.log(phone);
@@ -166,8 +182,10 @@ function parseMessage(sender, msg) {
 				db.close();
 			});
 		});
+    sendAckTo(sender, "Subscribed to " + phone + ".");
   } else {
   	console.log('No associated action with message ' + msg);
+    sendAckTo(sender, "No associated action. Please start your message with SEND, SELF, SUBS, or ADD.");
   }
 }
 
@@ -206,6 +224,5 @@ app.post('/receive', function(req, res){
 
 
 app.listen(3000, function () {
-	parseTest();
   console.log('listening on port 3000!')
 })
