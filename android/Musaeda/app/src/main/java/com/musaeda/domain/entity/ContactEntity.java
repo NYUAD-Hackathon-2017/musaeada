@@ -1,11 +1,13 @@
 package com.musaeda.domain.entity;
 
+import android.net.Uri;
+
 public class ContactEntity {
 
   private int id;
   private String name;
   private String number;
-  private String photoUri;
+  private Uri photoUri;
 
   public int getId() {
     return id;
@@ -31,11 +33,11 @@ public class ContactEntity {
     this.number = number;
   }
 
-  public String getPhotoUri() {
+  public Uri getPhotoUri() {
     return photoUri;
   }
 
-  public void setPhotoUri(String photoUri) {
+  public void setPhotoUri(Uri photoUri) {
     this.photoUri = photoUri;
   }
 }

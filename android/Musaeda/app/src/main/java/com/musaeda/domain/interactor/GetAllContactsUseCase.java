@@ -2,11 +2,8 @@ package com.musaeda.domain.interactor;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.provider.MediaStore;
 import com.musaeda.domain.entity.ContactEntity;
-import java.io.IOException;
 import java.util.List;
 import javax.inject.Inject;
 import rx.AsyncEmitter;
@@ -26,7 +23,7 @@ public class GetAllContactsUseCase extends UseCase {
   }
 
   @Override protected Observable buildUseCase() {
-    return getContactsList().flatMap(Observable::from).map(this::loadContactImage).toList();
+    return getContactsList();
   }
 
   private Observable<List<ContactEntity>> getContactsList() {
@@ -48,7 +45,8 @@ public class GetAllContactsUseCase extends UseCase {
           entity.setId(id);
           entity.setNumber(cursor.getString(cursor.getColumnIndex(Phone.NUMBER)));
           entity.setName(cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME)));
-          entity.setPhotoUri(cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI)));
+          String imageUri = cursor.getString(cursor.getColumnIndex(Contacts.PHOTO_THUMBNAIL_URI));
+          if (imageUri != null) entity.setPhotoUri(Uri.parse(imageUri));
           emitter.onNext(entity);
         }
       } catch (Exception e) {
@@ -59,15 +57,5 @@ public class GetAllContactsUseCase extends UseCase {
       }
       if (cursor != null) cursor.close();
     }, AsyncEmitter.BackpressureMode.BUFFER).toList();
-  }
-
-  private ContactEntity loadContactImage(ContactEntity entity) {
-    if (entity.getPhotoUri() != null) {
-      try {
-        Uri uri = Uri.parse(entity.getPhotoUri());
-        Bitmap bitmap = MediaStore.Images.Media.getBitmap(resolver, uri);
-      } catch (IOException e) {}
-    }
-    return entity;
   }
 }
