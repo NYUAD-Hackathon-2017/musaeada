@@ -1,14 +1,11 @@
 package com.musaeda.domain.entity;
 
-import android.graphics.Bitmap;
-
 public class ContactEntity {
 
   private int id;
   private String name;
   private String number;
   private String photoUri;
-  private Bitmap photo;
 
   public int getId() {
     return id;
@@ -40,13 +37,5 @@ public class ContactEntity {
 
   public void setPhotoUri(String photoUri) {
     this.photoUri = photoUri;
-  }
-
-  public Bitmap getPhoto() {
-    return photo;
-  }
-
-  public void setPhoto(Bitmap photo) {
-    this.photo = photo;
   }
 }
