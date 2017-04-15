@@ -59,6 +59,7 @@ function storeEdges(sender, subscribers) {
 }
 
 function add_data(user_number, name, subscriber) {
+  console.log("Adding data: " + user_number + ", " + name + ", " + subscriber)
 	MongoClient.connect(url, function(err, db) {
 
 		var opts = {
@@ -96,15 +97,19 @@ function broadcast(sender_number, msg) {
 }
 
 
-function receive(sender, msg) {
-
+function receive(sender_number, msg) {
+  if (msg[0] == '+') { // replace with check for sign up
+    console.log("sign me up!")
+  } else {
+    broadcast(sender_number, msg);
+  }
 }
 
 
 // --------------------------- ENDPOINTS ------------------------------
 
 app.get('/', function (req, res) {
-  // add_data(process.env.NAOMI_NUMBER, "Naomi", process.env.RASHIQ_NUMBER);
+  add_data(process.env.NAOMI_NUMBER, "Naomi", process.env.RASHIQ_NUMBER);
   // broadcast(process.env.NAOMI_NUMBER, "Message");
 
   res.send('Sending message!')
