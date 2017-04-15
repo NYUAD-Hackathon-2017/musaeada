@@ -25,15 +25,20 @@ var authToken = process.env.TWILIO_AUTH_TOKEN;   // Your Auth Token from www.twi
 var twilio = require('twilio');
 var client = new twilio.RestClient(accountSid, authToken);
 
-client.messages.create({
-    body: 'Hello from Node',
-    to: process.env.RASHIQ_NUMBER,  // Text this number
-    from: process.env.TWILIO_PHONE_NUMBER // From a valid Twilio number
-}, function(err, message) {
-   if(err) {
-      console.error(err.message);
-   }
-});
+
+function sendMessageTo(sender, receiver, message) {
+  console.log("Message sent.")
+  client.messages.create({
+      body: sender + ": " + message,
+      to: receiver,  // Text this number
+      from: process.env.TWILIO_PHONE_NUMBER // From a valid Twilio number
+  }, function(err, message) {
+     if(err) {
+        console.error(err.message);
+     }
+  });
+
+}
 
 // Set up mongo client.
 let url = `mongodb://${user}:${pass}@${host}:${port}`;
@@ -47,9 +52,42 @@ function storeEdges(sender, subscribers) {
 
 }
 
-function broadcast(sender, msg) {
-	// retrieve associations w this sender
-	// send message to each number (sendTo)
+function add_data(user_number, name, subscriber) {
+	MongoClient.connect(url, function(err, db) {
+
+		var opts = {
+			broadcaster: user_number,
+      broadcastername: name,
+			subscriber: subscriber,
+		};
+
+		dbHelper.createNewEdge(db, opts, function() {
+	    db.close();
+	  });
+	});
+}
+
+function broadcast(sender_number, msg) {
+	// retrieve associations w this sender & send to all
+  MongoClient.connect(url, function(err, db) {
+
+		var opts = {
+			broadcaster: sender_number,
+		};
+
+	  dbHelper.retrieveEdges(db, opts, function(mappings_of_user) {
+      console.log("hi")
+	  	console.log(mappings_of_user);
+
+      for(var i=0; i < mappings_of_user.length; i++){
+        var subscriber_number = mappings_of_user[i]['subscriber'];
+        var sender_name = mappings_of_user[i]['broadcastername']
+        console.log(sender_name + " has subscriber: " + subscriber_number);
+        // sendMessageTo(sender_name, subscriber_number, msg);
+      }
+	  	db.close();
+	  });
+	});
 }
 
 
@@ -61,29 +99,11 @@ function sendTo(receiver, msg) {
 
 }
 
-// This just tests that the db functions work. 
-function db_test() {
-	MongoClient.connect(url, function(err, db) {
-
-		var opts = {
-			broadcaster: '1234567890',
-			ts: 123,
-			subscriber: '11111111111',
-		};
-
-		dbHelper.createNewEdge(db, opts, function() {
-	    db.close();
-	  });
-
-	  dbHelper.retrieveEdges(db, opts, function(subscribers) {
-	  	console.log(subscribers);
-	  	db.close();
-	  });
-	});
-}
-
 app.get('/', function (req, res) {
-  res.send('Hello World!')
+  // add_data(process.env.NAOMI_NUMBER, "Naomi", process.env.RASHIQ_NUMBER);
+  broadcast(process.env.NAOMI_NUMBER, "Message");
+
+  res.send('Sending message!')
 })
 
 app.post('/store', function(sReq, sRes){
@@ -92,6 +112,12 @@ app.post('/store', function(sReq, sRes){
 
 app.get('/receive', function(sReq, sRes){
   console.log('receiving request ' + sReq);
+  broadcast("Naomi", "Test message");
+})
+
+app.get('/send', function(sReq, sRes){
+  // sendMessageTo("Naomi", process.env.RASHIQ_NUMBER, "Such a Rashiq thing to do...");
+  console.log('Receiving request ' + sReq);
 })
 
 app.listen(3000, function () {

@@ -1,12 +1,12 @@
 var assert = require('assert');
 
 module.exports = {
-  // Use the insertOne method to create a new document when a 
+  // Use the insertOne method to create a new document when a
   // new edge is created
   createNewEdge : function(db, ops, callback) {
     db.collection('edges').insertOne( {
       "broadcaster": ops.broadcaster,
-      "timestamp": ops.ts,
+      "broadcastername": ops.broadcastername,
       //"codename": ops.name,
       "subscriber": ops.subscriber,
     }, function(err, result) {
@@ -15,10 +15,10 @@ module.exports = {
     });
   },
 
-  // Use this to retrieve a list of edges from the mongo db 
+  // Use this to retrieve a list of edges from the mongo db
   retrieveEdges : function(db, ops, callback) {
     //var edgeList = [];
-    var cursor = db.collection('edges').find();
+    var cursor = db.collection('edges').find(ops);
 
     cursor.toArray(function(err, doc) {
       assert.equal(err, null);
