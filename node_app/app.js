@@ -13,6 +13,12 @@ const pass = process.env.MONGO_PW;
 const host = process.env.MONGO_HOST;
 const port = process.env.MONGO_PORT;
 
+var http = require('http');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
 // DB Connection stuff
 var MongoClient = require('mongodb').MongoClient;
 var ObjectId = require('mongodb').ObjectID;
@@ -90,13 +96,12 @@ function broadcast(sender_number, msg) {
 }
 
 
-function receive(sender, receiver, msg) {
+function receive(sender, msg) {
 
 }
 
-function sendTo(receiver, msg) {
 
-}
+// --------------------------- ENDPOINTS ------------------------------
 
 app.get('/', function (req, res) {
   // add_data(process.env.NAOMI_NUMBER, "Naomi", process.env.RASHIQ_NUMBER);
@@ -109,9 +114,9 @@ app.post('/store', function(sReq, sRes){
   console.log('receiving request ' + sReq);
 })
 
-app.get('/receive', function(sReq, sRes){
-  console.log('receiving request ' + sReq);
-  broadcast("Naomi", "Test message");
+app.post('/receive', function(req, res){
+    console.log("Received: " + req.body.Body + " from " + req.body.From);
+    receive(req.body.From, req.body.Body);
 })
 
 app.get('/send', function(sReq, sRes){
