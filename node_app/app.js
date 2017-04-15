@@ -52,7 +52,6 @@ let url = `mongodb://${user}:${pass}@${host}:${port}`;
 if (process.env.MONGO_DB) {
   url = `${url}/${process.env.MONGO_DB}`;
 }
-console.log('url is ' + url);
 
 function addData(user_number, name, subscriber) {
 	 console.log("Adding data: " + user_number + ", " + name + ", " + subscriber)
@@ -126,11 +125,9 @@ function parseMessage(sender, msg) {
   	// Query for the sender's name.
   	MongoClient.connect(url, function(err, db) {
 	  	dbHelper.retrieveName(db, opts, function(obj) {
-	  		//console.log("name is " + obj["name"]);
 	  		var name = obj['name'];
 	  		// Get the numbers and batch add async to db
 		  	var cleanedNumbers = utils.getNumbers(msg);
-		  	//console.log(cleanedNumbers + " cleaned numbers");
 		  	batchAdd(cleanedNumbers, sender, name);
 		  	db.close();
 	  	});
@@ -167,9 +164,9 @@ function parseTest() {
 	//parseMessage(process.env.SHIRLEY_NUMBER, nameMessage);
 
 	var addMessage = "ADD " + process.env.NAOMI_NUMBER + ", " + process.env.RASHIQ_NUMBER;
-	parseMessage(process.env.SHIRLEY_NUMBER, addMessage);
+	//parseMessage(process.env.SHIRLEY_NUMBER, addMessage);
 
-	var sendMessage = "SEND hello to everyone!";
+	var sendMessage = "SEND hello world, this should send from number";
 	//parseMessage(process.env.SHIRLEY_NUMBER, sendMessage);
 }
 

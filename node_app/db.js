@@ -18,7 +18,6 @@ module.exports = {
   },
 
   createManyEdges : function(db, entries, sender, callback) {
-    //console.log(entries);
     // Deduplicate first by calling retrieveEdges. 
     this.retrieveEdges(db, {broadcaster: sender}, function(results) {
       // Map entries to just numbers. 
@@ -70,8 +69,14 @@ module.exports = {
     var cursor = db.collection('names').find(ops);
     cursor.toArray(function(err, doc) {
       assert.equal(err, null);
-      assert.notEqual(doc, [], 'Found no entries');
-      callback(doc[0]);
+
+      // If name has not been defined yet
+      if (doc.length === 0) {
+        // fake the name with the phone number
+        callback({'name': ops.number});
+      } else {
+        callback(doc[0]);
+      }
     });
   }
 };
