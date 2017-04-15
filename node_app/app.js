@@ -98,11 +98,7 @@ function broadcast(sender_number, msg) {
 }
 
 function receive(sender_number, msg) {
-  if (msg[0] == '+') { // replace with check for sign up
-    console.log("sign me up!")
-  } else {
-    broadcast(sender_number, msg);
-  }
+  parseMessage
 }
 
 function sendTo(receiver, msg) {}
@@ -125,7 +121,7 @@ function batchAdd(cleaned, sender, name) {
 }
 
 // Determines if we have an ADD or SEND upon first receipt 
-function parseMessage(msg, sender) {
+function parseMessage(sender, msg) {
 	var action = msg.split(' ')[0];
 
   if (action === 'ADD' || action === 'add') {
@@ -171,6 +167,7 @@ function parseMessage(msg, sender) {
   }
 }
 
+// DON'T run this often. it sends lots of messages and that costs $$$.
 function parseTest() {
 	// Test the name storage. 
 	var nameMessage = "SELF Shirley";
@@ -197,7 +194,7 @@ app.post('/store', function(sReq, sRes){
 
 app.post('/receive', function(req, res){
     console.log("Received: " + req.body.Body + " from " + req.body.From);
-    receive(req.body.From, req.body.Body);
+    parseMessage(req.body.From, req.body.Body);
 })
 
 app.get('/send', function(sReq, sRes){
