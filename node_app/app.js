@@ -76,14 +76,13 @@ function broadcast(sender_number, msg) {
 		};
 
 	  dbHelper.retrieveEdges(db, opts, function(mappings_of_user) {
-      console.log("hi")
 	  	console.log(mappings_of_user);
 
       for(var i=0; i < mappings_of_user.length; i++){
         var subscriber_number = mappings_of_user[i]['subscriber'];
         var sender_name = mappings_of_user[i]['broadcastername']
         console.log(sender_name + " has subscriber: " + subscriber_number);
-        // sendMessageTo(sender_name, subscriber_number, msg);
+        sendMessageTo(sender_name, subscriber_number, msg);
       }
 	  	db.close();
 	  });
@@ -101,7 +100,7 @@ function sendTo(receiver, msg) {
 
 app.get('/', function (req, res) {
   // add_data(process.env.NAOMI_NUMBER, "Naomi", process.env.RASHIQ_NUMBER);
-  broadcast(process.env.NAOMI_NUMBER, "Message");
+  // broadcast(process.env.NAOMI_NUMBER, "Message");
 
   res.send('Sending message!')
 })
