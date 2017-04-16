@@ -23,7 +23,7 @@
         </activity>
         <activity android:name=".presentation.view.home.MainActivity">
         </activity>
-        <activity android:name=".SMSSendingActivity">
+        <activity android:name=".ComposeMessageActivity">
         </activity>
     </application>
 

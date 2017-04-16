@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import java.io.BufferedInputStream;
@@ -14,7 +16,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SMSSendingActivity extends AppCompatActivity {
+public class ComposeMessageActivity extends AppCompatActivity {
 
   private Button mbtn1, mbtn2, mbtn3;
   private final static String NUMBER = "+15876002133";
@@ -53,6 +55,7 @@ public class SMSSendingActivity extends AppCompatActivity {
     });
   }
 
+
   //public class onBtnClickHttpPost extends AsyncTask<String, String, String> {
   //
   //  @Override protected void onPreExecute() {
@@ -83,4 +86,7 @@ public class SMSSendingActivity extends AppCompatActivity {
   //
   //
   //}
+
+
+
 }

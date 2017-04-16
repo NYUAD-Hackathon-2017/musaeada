@@ -32,13 +32,11 @@ public class ContactsPickerActivity extends BaseActivity<ContactsPickerActivity>
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.contacts_picker_list) RecyclerView recyclerView;
   @BindView(R.id.add_contact_button) Button addContactButton;
-  private List<ContactEntity> entities;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    addContactButton.setOnClickListener(v -> {
-      startActivity(new Intent(ContactsPickerActivity.this, MainActivity.class));
-    });
+    startActivity(new Intent(this, MainActivity.class));
+    addContactButton.setOnClickListener(v -> startActivity(new Intent(ContactsPickerActivity.this, MainActivity.class)));
   }
 
   @Override protected void setContentView() {
@@ -81,7 +79,6 @@ public class ContactsPickerActivity extends BaseActivity<ContactsPickerActivity>
   }
 
   @Override public void setAdapter(List<ContactEntity> entities) {
-    this.entities = entities;
     ContactsPickerAdapter adapter = new ContactsPickerAdapter(entities);
     adapter.setListener(position -> {
       contactsHolder.addContact(entities.get(position));
