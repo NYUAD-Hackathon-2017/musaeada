@@ -1,9 +1,13 @@
 package com.musaeda.presentation.view.home;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.*;
+import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import butterknife.BindView;
@@ -25,6 +29,9 @@ public class MainActivity extends BaseActivity<MainActivity>
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.my_contacts_list) RecyclerView recyclerView;
   private BottomSheetBehavior behavior;
+  private Button mbtn1, mbtn2, mbtn3;
+  private final static String NUMBER = "+15876002133";
+  private final static String TAG = "SMSSendingActivity";
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -49,6 +56,34 @@ public class MainActivity extends BaseActivity<MainActivity>
     //     behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     //   }
     // });
+
+    mbtn1 = (Button) findViewById(R.id.btn_1);
+    mbtn2 = (Button) findViewById(R.id.btn_2);
+    mbtn3 = (Button) findViewById(R.id.btn_3);
+
+    ActivityCompat.requestPermissions(this,new String[]{ Manifest.permission.SEND_SMS},1);
+
+    mbtn1.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        SmsManager.getDefault().sendTextMessage(NUMBER,null,"SEND I need Help. \n My GPS location (Longitude: 24.522491900000002, \nLatitude: 54.4355024)",null, null);
+        Log.d(TAG,"I need Help");
+
+      }
+    });
+
+    mbtn2.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        SmsManager.getDefault().sendTextMessage(NUMBER,null,"SEND I'm Safe",null, null);
+        Log.d(TAG,"I am safe");
+      }
+    });
+
+    mbtn3.setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        SmsManager.getDefault().sendTextMessage(NUMBER,null,"SEND Call me",null, null);
+        Log.d(TAG,"Call me");
+      }
+    });
   }
 
   @Override protected void setContentView() {
