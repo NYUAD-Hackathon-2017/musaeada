@@ -35,7 +35,6 @@ public class ContactsPickerActivity extends BaseActivity<ContactsPickerActivity>
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    startActivity(new Intent(this, MainActivity.class));
     addContactButton.setOnClickListener(v -> startActivity(new Intent(ContactsPickerActivity.this, MainActivity.class)));
   }
 

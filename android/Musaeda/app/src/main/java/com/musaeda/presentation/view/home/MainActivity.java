@@ -42,24 +42,13 @@ public class MainActivity extends BaseActivity<MainActivity>
     behavior = BottomSheetBehavior.from(bottomSheet);
 
     Button button = (Button) findViewById(R.id.broadcast_button);
-    button.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        if (behavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-          behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-        } else {
-          behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        }
+    button.setOnClickListener(view -> {
+      if (behavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+      } else {
+        behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
       }
     });
-    // actionButton.setOnClickListener(v -> {
-    //   if (behavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
-    //     behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-    //   } else {
-    //     behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-    //   }
-    // });
-
     mbtn1 = (Button) findViewById(R.id.btn_1);
     mbtn2 = (Button) findViewById(R.id.btn_2);
     mbtn3 = (Button) findViewById(R.id.btn_3);
