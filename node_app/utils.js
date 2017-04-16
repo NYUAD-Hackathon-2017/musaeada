@@ -21,11 +21,12 @@ module.exports = {
 		uncleaned.forEach(function(num) {
 			var cleaned = num.replace(/\D/g, "");
 
-			if (cleaned.length > 11 || cleaned.length < 10) {
+			/*if (cleaned.length > 11 || cleaned.length < 10) {
 				console.log('Invalid phone number found ' + cleaned);
 			} else {
 				cleanedNumbers.push(cleaned);
-			}
+			}*/
+			cleanedNumbers.push(cleaned);
 
 		});
 
@@ -37,10 +38,10 @@ module.exports = {
 
   	var cleaned = string.replace(/\D/g, "");
 
-  	if (cleaned.length > 11 || cleaned.length < 10) {
+  	/*if (cleaned.length > 11 || cleaned.length < 10) {
   		console.log('Invalid phone number in subscribe number ' + cleaned);
   		return '';
-  	}
+  	}*/
 
     cleaned = '+' + cleaned;
 
