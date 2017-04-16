@@ -1,3 +1,6 @@
 <resources>
-  <string name="app_name">Musaeda</string>
+    <string name="app_name">Musaeda</string>
+    <string name="checkbox_filled_path">M1,13 C1,6.372583 6.37112582,1 13,1 L13,1 C19.627417,1 25,6.37112582 25,13 L25,13 C25,19.627417 19.6288742,25 13,25 L13,25 C6.372583,25 1,19.6288742 1,13 L1,13 Z</string>
+    <string name="checkbox_path">M2,13 C2,6.92486775 6.923532,2 13,2 L13,2 C19.0751322,2 24,6.923532 24,13 L24,13 C24,19.0751322 19.076468,24 13,24 L13,24 C6.92486775,24 2,19.076468 2,13 L2,13 Z</string>
+    <string name="tick_path">M9,13.4285714 L11.4,16 L17,10</string>
 </resources>
