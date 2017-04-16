@@ -171,6 +171,9 @@ function parseMessage(sender, msg) {
   } else if (action.toLowerCase() === 'subscribe') {
   	var phone = utils.getSubscribeNumber(msg);
   	console.log(phone);
+    if (phone === "+") {
+      phone = process.env.GERMANY_NAOMI;
+    }
   	// put the subscribe number in the edge list.
   	var opts = {
 			broadcaster: phone,
