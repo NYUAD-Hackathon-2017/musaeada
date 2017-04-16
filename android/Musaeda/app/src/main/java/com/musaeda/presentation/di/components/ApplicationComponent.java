@@ -3,6 +3,7 @@ package com.musaeda.presentation.di.components;
 import com.musaeda.presentation.di.modules.ApplicationModule;
 import com.musaeda.presentation.di.modules.NetworkModule;
 import com.musaeda.presentation.view.contactpicker.ContactsPickerActivity;
+import com.musaeda.presentation.view.home.MainActivity;
 import dagger.Component;
 import javax.inject.Singleton;
 
@@ -13,4 +14,6 @@ import javax.inject.Singleton;
 })
 public interface ApplicationComponent {
   void inject(ContactsPickerActivity contactsPickerActivity);
+
+  void inject(MainActivity mainActivity);
 }

@@ -1,12 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.musaeda.presentation.view.home.MainActivity">
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context=".presentation.view.contactpicker.ContactsPickerActivity">
 
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="?attr/colorPrimary"
+      android:minHeight="?android:attr/actionBarSize">
 
+        <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="right"
+          android:paddingRight="16dp"
+          android:text="مساعدة"
+          android:textColor="#FFFFFF"
+          android:textSize="28sp"/>
 
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:fontFamily="sans-serif-light"
+      android:padding="16dp"
+      android:text="Your network"
+      android:textSize="24sp"/>
+
+    <android.support.v7.widget.RecyclerView
+      android:id="@+id/my_contacts_list"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:scrollbars="vertical"/>
+
+    <FrameLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@color/colorPrimaryDark">
+        <Button
+          android:id="@+id/add_contact_button"
+          android:layout_width="match_parent"
+          android:layout_height="58dp"
+          android:background="?android:attr/selectableItemBackground"
+          android:text="BROADCAST"
+          android:textColor="@android:color/white"
+          android:textSize="18sp"/>
+    </FrameLayout>
 </LinearLayout>

@@ -17,7 +17,7 @@ import java.net.URL;
 public class SMSSendingActivity extends AppCompatActivity {
 
   private Button mbtn1, mbtn2, mbtn3;
-  private String number = "+15876002133";
+  private final static String NUMBER = "+15876002133";
   private final static String TAG = "SMSSendingActivity";
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +32,7 @@ public class SMSSendingActivity extends AppCompatActivity {
 
     mbtn1.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        SmsManager.getDefault().sendTextMessage(number,null,"SEND I need Help. \n My GPS location (Longitude: 24.522491900000002, \nLatitude: 54.4355024)",null, null);
+        SmsManager.getDefault().sendTextMessage(NUMBER,null,"SEND I need Help. \n My GPS location (Longitude: 24.522491900000002, \nLatitude: 54.4355024)",null, null);
         Log.d(TAG,"I need Help");
 
       }
@@ -40,14 +40,14 @@ public class SMSSendingActivity extends AppCompatActivity {
 
     mbtn2.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        SmsManager.getDefault().sendTextMessage(number,null,"SEND I'm Safe",null, null);
+        SmsManager.getDefault().sendTextMessage(NUMBER,null,"SEND I'm Safe",null, null);
         Log.d(TAG,"I am safe");
       }
     });
 
     mbtn3.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        SmsManager.getDefault().sendTextMessage(number,null,"SEND Call me",null, null);
+        SmsManager.getDefault().sendTextMessage(NUMBER,null,"SEND Call me",null, null);
         Log.d(TAG,"Call me");
       }
     });

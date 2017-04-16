@@ -128,7 +128,7 @@ function batchAdd(cleaned, sender, name) {
 function parseMessage(sender, msg) {
 	var action = msg.split(' ')[0];
 
-  if (action === 'ADD' || action === 'add') {
+  if (action.toLowerCase() === 'add') {
   	// Get the name for the current sender's number.
   	var opts = {
   		number : sender,
@@ -146,14 +146,14 @@ function parseMessage(sender, msg) {
 	  });
 
     sendAckTo(sender, "Number added.");
-  } else if (action === 'SEND' || action === 'send') {
+  } else if (action.toLowerCase() === 'send') {
   	// Get the message to send.
   	var cleanedMessage = utils.getMessage(msg);
 
   	// Broadcast the cleaned message.
   	broadcast(sender, cleanedMessage);
     sendAckTo(sender, "Message broadcast.")
-  } else if (action === 'SELF' || action === 'self') {
+  } else if (action.toLowerCase() === 'self') {
   	var name = utils.getMessage(msg);
 
   	var opts = {
@@ -168,7 +168,7 @@ function parseMessage(sender, msg) {
 	  	});
 	  });
     sendAckTo(sender, "Hello " + name + ".");
-  } else if (action === 'SUBS' || action === 'subs') {
+  } else if (action.toLowerCase() === 'subs') {
   	var phone = utils.getSubscribeNumber(msg);
   	console.log(phone);
   	// put the subscribe number in the edge list.
@@ -182,7 +182,7 @@ function parseMessage(sender, msg) {
 				db.close();
 			});
 		});
-    sendAckTo(sender, "Subscribed to " + phone + ".");
+    sendAckTo(sender, "You are subscribed to " + phone + ".");
   } else {
   	console.log('No associated action with message ' + msg);
     sendAckTo(sender, "No associated action. Please start your message with SEND, SELF, SUBS, or ADD.");

@@ -2,6 +2,7 @@ package com.musaeda.presentation.view.contactpicker;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import com.musaeda.domain.database.ContactsHolder;
 import com.musaeda.domain.entity.ContactEntity;
 import com.musaeda.domain.interactor.GetAllContactsUseCase;
 import com.soundcloud.lightcycle.ActivityLightCycleDispatcher;
@@ -12,14 +13,17 @@ public class ContactsPickerPresenter extends ActivityLightCycleDispatcher<Contac
 
   private ContactsPickerCallback callback;
   private GetAllContactsUseCase getAllContactsUseCase;
+  private ContactsHolder contactsHolder;
 
-  @Inject ContactsPickerPresenter(GetAllContactsUseCase getAllContactsUseCase) {
+  @Inject ContactsPickerPresenter(GetAllContactsUseCase getAllContactsUseCase, ContactsHolder contactsHolder) {
     this.getAllContactsUseCase = getAllContactsUseCase;
+    this.contactsHolder = contactsHolder;
   }
 
   @Override public void onCreate(ContactsPickerCallback callback, @Nullable Bundle bundle) {
     super.onCreate(callback, bundle);
     this.callback = callback;
+    contactsHolder.clear();
     callback.setUpRecyclerView();
     loadAllContacts();
   }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/task_checkbox_svg">
+
+    <target
+        android:name="checkbox_group"
+        android:animation="@anim/anim_checkbox_group" />
+    <target
+        android:name="checkbox_path"
+        android:animation="@anim/anim_checkbox_path" />
+    <target
+        android:name="checkbox_filled_group"
+        android:animation="@anim/anim_checkbox_filled_group" />
+    <target
+        android:name="checkbox_filled_path"
+        android:animation="@anim/anim_checkbox_filled_path" />
+    <target
+        android:name="tick_group"
+        android:animation="@anim/anim_tick_group" />
+    <target
+        android:name="tick_path"
+        android:animation="@anim/anim_tick_path" />
+
+</animated-vector>

@@ -23,7 +23,7 @@ public class GetAllContactsUseCase extends UseCase {
   }
 
   @Override protected Observable buildUseCase() {
-    return getContactsList();
+    return getContactsList().flatMap(Observable::from).distinct(ContactEntity::getName).toList();
   }
 
   private Observable<List<ContactEntity>> getContactsList() {

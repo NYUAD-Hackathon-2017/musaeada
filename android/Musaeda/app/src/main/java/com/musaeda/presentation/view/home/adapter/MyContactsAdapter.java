@@ -1,10 +1,7 @@
-package com.musaeda.presentation.view.contactpicker.adapter;
+package com.musaeda.presentation.view.home.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.AnimatedVectorDrawable;
-import android.os.Build;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.ImageView;
@@ -17,7 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 import java.util.Random;
 
-public class ContactsPickerAdapter extends RecyclerView.Adapter<ContactsPickerAdapter.ViewHolder> {
+public class MyContactsAdapter extends RecyclerView.Adapter<MyContactsAdapter.ViewHolder> {
   private List<ContactEntity> data;
 
   private static final int[] COLORS = {
@@ -37,15 +34,15 @@ public class ContactsPickerAdapter extends RecyclerView.Adapter<ContactsPickerAd
     this.listener = listener;
   }
 
-  public ContactsPickerAdapter(List<ContactEntity> data) {
+  public MyContactsAdapter(List<ContactEntity> data) {
     this.data = data;
   }
 
   @Override
-  public ContactsPickerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+  public MyContactsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
       int viewType) {
     Context context = parent.getContext();
-    View view = LayoutInflater.from(context).inflate(R.layout.row_contacts_picker, parent, false);
+    View view = LayoutInflater.from(context).inflate(R.layout.row_my_contacts, parent, false);
     ViewHolder vh = new ViewHolder(view);
     return vh;
   }
@@ -67,16 +64,6 @@ public class ContactsPickerAdapter extends RecyclerView.Adapter<ContactsPickerAd
     } else {
       holder.photo.setImageDrawable(defaultPhoto);
     }
-
-    holder.checkbox.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.anim_task_completion));
-    holder.itemView.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-          ((AnimatedVectorDrawable) holder.checkbox.getDrawable().mutate()).start();
-        }
-        listener.onCheckBoxChecked(position);
-      }
-    });
   }
 
   private TextDrawable getDefaultDrawable(ContactEntity entity) {
@@ -93,13 +80,11 @@ public class ContactsPickerAdapter extends RecyclerView.Adapter<ContactsPickerAd
   public static class ViewHolder extends RecyclerView.ViewHolder {
     public TextView name;
     public ImageView photo;
-    public ImageView checkbox;
 
     public ViewHolder(View v) {
       super(v);
       name = (TextView) v.findViewById(R.id.contact_name);
       photo = (ImageView) v.findViewById(R.id.contact_image);
-      checkbox = (ImageView) v.findViewById(R.id.pick_checkbox);
     }
   }
 
