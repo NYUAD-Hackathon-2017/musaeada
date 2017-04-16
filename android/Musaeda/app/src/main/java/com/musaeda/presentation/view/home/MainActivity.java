@@ -1,8 +1,11 @@
 package com.musaeda.presentation.view.home;
 
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.*;
+import android.view.View;
+import android.widget.Button;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.musaeda.R;
@@ -21,9 +24,31 @@ public class MainActivity extends BaseActivity<MainActivity>
   @Inject @LightCycle HomePresenter presenter;
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.my_contacts_list) RecyclerView recyclerView;
+  private BottomSheetBehavior behavior;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    View bottomSheet = findViewById(R.id.bottom_sheet1);
+    behavior = BottomSheetBehavior.from(bottomSheet);
+
+    Button mButton1 = (Button) findViewById(R.id.button_1);
+    mButton1.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        if (behavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+          behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        } else {
+          behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
+      }
+    });
+    // actionButton.setOnClickListener(v -> {
+    //   if (behavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {
+    //     behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+    //   } else {
+    //     behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+    //   }
+    // });
   }
 
   @Override protected void setContentView() {

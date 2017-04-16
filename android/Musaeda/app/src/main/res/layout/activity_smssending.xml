@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.musaeda.SMSSendingActivity">
+    tools:context="com.musaeda.ComposeMessageActivity">
 
   <LinearLayout
       android:id="@+id/linear_layout1"

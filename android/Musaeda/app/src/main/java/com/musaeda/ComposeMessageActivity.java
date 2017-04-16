@@ -1,8 +1,8 @@
 package com.musaeda;
 
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import java.io.BufferedInputStream;
@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SMSSendingActivity extends AppCompatActivity {
+public class ComposeMessageActivity extends AppCompatActivity {
 
   private Button mbtn1, mbtn2, mbtn3;
 
@@ -30,7 +30,6 @@ public class SMSSendingActivity extends AppCompatActivity {
 
     mbtn2.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-
 
       }
     });
@@ -59,7 +58,6 @@ public class SMSSendingActivity extends AppCompatActivity {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
         in = new BufferedInputStream(urlConnection.getInputStream());
-
       } catch (Exception e) {
 
         e.printStackTrace();
@@ -69,7 +67,5 @@ public class SMSSendingActivity extends AppCompatActivity {
 
       return null;
     }
-
-
   }
 }
