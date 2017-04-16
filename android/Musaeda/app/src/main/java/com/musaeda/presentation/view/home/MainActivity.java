@@ -28,11 +28,11 @@ public class MainActivity extends BaseActivity<MainActivity>
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    View bottomSheet = findViewById(R.id.bottom_sheet1);
+    View bottomSheet = findViewById(R.id.bottom_sheet);
     behavior = BottomSheetBehavior.from(bottomSheet);
 
-    Button mButton1 = (Button) findViewById(R.id.button_1);
-    mButton1.setOnClickListener(new View.OnClickListener() {
+    Button button = (Button) findViewById(R.id.broadcast_button);
+    button.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
         if (behavior.getState() != BottomSheetBehavior.STATE_EXPANDED) {

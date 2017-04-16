@@ -2,35 +2,34 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true">
-        <shape>
+        <shape android:shape="oval">
             <solid android:color="#C62828"/>
-            <corners
-              android:radius="7dp"/>
+            <!--<corners-->
+              <!--android:radius="7dp"/>-->
         </shape>
     </item>
 
     <item android:state_focused="true">
-        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <shape android:shape="oval">
             <solid android:color="#B71C1C"/>
-            <corners
-              android:radius="7dp"/>
+            <!--<corners-->
+              <!--android:radius="7dp"/>-->
         </shape>
     </item>
 
     <item android:state_focused="false">
-        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <shape android:shape="oval">
             <solid android:color="#C62828"/>
-            <corners
-              android:radius="7dp"/>
+            <!--<corners-->
+              <!--android:radius="7dp"/>-->
         </shape>
     </item>
 
     <item android:state_pressed="false">
-        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+        <shape android:shape="oval">
             <solid android:color="#C62828"/>
-            <corners
-              android:radius="7dp"
-              />
+            <!--<corners-->
+              <!--android:radius="7dp"/>-->
         </shape>
     </item>
 
