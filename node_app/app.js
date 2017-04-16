@@ -182,7 +182,7 @@ function parseMessage(sender, msg) {
 				db.close();
 			});
 		});
-    sendAckTo(sender, "Subscribed to " + phone + ".");
+    sendAckTo(sender, "You are subscribed to " + phone + ".");
   } else {
   	console.log('No associated action with message ' + msg);
     sendAckTo(sender, "No associated action. Please start your message with SEND, SELF, SUBS, or ADD.");
