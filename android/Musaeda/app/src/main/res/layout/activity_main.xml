@@ -65,10 +65,9 @@
       android:id="@+id/bottom_sheet"
       android:layout_width="match_parent"
       android:layout_height="250dp"
-      android:background="@android:color/white"
+      android:background="@drawable/top_separator"
       android:clipToPadding="true"
       app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
-
         <include layout="@layout/bottom_sheet_layout"/>
 
     </android.support.v4.widget.NestedScrollView>
