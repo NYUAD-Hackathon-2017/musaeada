@@ -1,6 +1,7 @@
 package com.musaeda.presentation.view.home;
 
 import android.Manifest;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.ActivityCompat;
@@ -10,6 +11,7 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.musaeda.R;
@@ -32,6 +34,7 @@ public class MainActivity extends BaseActivity<MainActivity>
   private Button mbtn1, mbtn2, mbtn3;
   private final static String NUMBER = "+15876002133";
   private final static String TAG = "SMSSendingActivity";
+  private Context mContext = this;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -67,6 +70,7 @@ public class MainActivity extends BaseActivity<MainActivity>
       @Override public void onClick(View v) {
         SmsManager.getDefault().sendTextMessage(NUMBER,null,"SEND I need Help. \n My GPS location (Longitude: 24.522491900000002, \nLatitude: 54.4355024)",null, null);
         Log.d(TAG,"I need Help");
+        Toast.makeText(mContext, "Sending the Message",Toast.LENGTH_SHORT).show();
 
       }
     });
@@ -75,6 +79,7 @@ public class MainActivity extends BaseActivity<MainActivity>
       @Override public void onClick(View v) {
         SmsManager.getDefault().sendTextMessage(NUMBER,null,"SEND I'm Safe",null, null);
         Log.d(TAG,"I am safe");
+        Toast.makeText(mContext, "Sending the Message",Toast.LENGTH_SHORT).show();
       }
     });
 
@@ -82,6 +87,7 @@ public class MainActivity extends BaseActivity<MainActivity>
       @Override public void onClick(View v) {
         SmsManager.getDefault().sendTextMessage(NUMBER,null,"SEND Call me",null, null);
         Log.d(TAG,"Call me");
+        Toast.makeText(mContext, "Sending the Message",Toast.LENGTH_SHORT).show();
       }
     });
   }
