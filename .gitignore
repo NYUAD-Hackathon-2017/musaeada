@@ -33,3 +33,4 @@ proguard/
 
 /node_app/.env
 /node_app/node_modules/*
+/node_app/google-cloud-sdk/*

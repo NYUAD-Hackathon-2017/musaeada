@@ -168,7 +168,7 @@ function parseMessage(sender, msg) {
 	  	});
 	  });
     sendAckTo(sender, "Hello " + name + ".");
-  } else if (action.toLowerCase() === 'subs') {
+  } else if (action.toLowerCase() === 'subscribe') {
   	var phone = utils.getSubscribeNumber(msg);
   	console.log(phone);
   	// put the subscribe number in the edge list.
@@ -201,14 +201,14 @@ function parseTest() {
 	var sendMessage = "SEND hello world, this should send from number";
 	//parseMessage(process.env.SHIRLEY_NUMBER, sendMessage);
 
-	var subscribe = "SUBS " + process.env.NAOMI_NUMBER;
-	parseMessage(process.env.SHIRLEY_NUMBER, subscribe);
+	var subscribe = "SUBSCRIBE " + process.env.NAOMI_NUMBER;
+	//parseMessage(process.env.SHIRLEY_NUMBER, subscribe);
 }
 
 // --------------------------- ENDPOINTS ------------------------------
 
 app.get('/', function (req, res) {
-  add_data(process.env.NAOMI_NUMBER, "Naomi", process.env.RASHIQ_NUMBER);
+  //add_data(process.env.NAOMI_NUMBER, "Naomi", process.env.RASHIQ_NUMBER);
   // broadcast(process.env.NAOMI_NUMBER, "Message");
   res.send('Sending message!')
 })
@@ -220,6 +220,10 @@ app.get('/', function (req, res) {
 app.post('/receive', function(req, res){
     console.log("Received: " + req.body.Body + " from " + req.body.From);
     parseMessage(req.body.From, req.body.Body);
+})
+
+app.post('/alert', function(req, res) {
+	sendAlert(req.body.From, req.body.Body, process.env.UN);
 })
 
 
