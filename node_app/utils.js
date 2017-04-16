@@ -40,7 +40,10 @@ module.exports = {
   	if (cleaned.length > 11 || cleaned.length < 10) {
   		console.log('Invalid phone number in subscribe number ' + cleaned);
   		return '';
-  	} 
+  	}
+
+    cleaned = '+' + cleaned;
+
   	return cleaned;
   }
 
