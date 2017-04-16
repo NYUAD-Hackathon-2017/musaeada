@@ -185,7 +185,7 @@ function parseMessage(sender, msg) {
     sendAckTo(sender, "You are subscribed to " + phone + ".");
   } else {
   	console.log('No associated action with message ' + msg);
-    sendAckTo(sender, "No associated action. Please start your message with SEND, SELF, SUBS, or ADD.");
+    sendAckTo(sender, "No associated action. Please start your message with SEND, SELF, SUBSCRIBE, or ADD.");
   }
 }
 
